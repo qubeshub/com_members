@@ -1,0 +1,124 @@
+/**
+ * @package     hubzero-cms
+ * @file        components/com_register/register.css
+ * @copyright   Copyright 2005-2011 Purdue University. All rights reserved.
+ * @license     http://www.gnu.org/licenses/lgpl-3.0.html LGPLv3
+ */
+
+/*
+
+	-- -- -- -- -- -- --
+	com_register CSS
+	-- -- -- -- -- -- --
+
+*/
+
+	#orcid-fetch {
+		margin-top: 3.5em;
+	}
+
+/* Password strength checker */
+	#meter-container {
+		position: relative; /* IE is dumb */
+		display: block;
+		border: 1px solid #ccc;
+		padding: 2px;
+		margin: 0.3em 0;
+	}
+	#meter-container #passwd-meter { 
+		display: block;
+		position: relative;
+		text-align: center; 
+		color: #333;
+		height: 2em;
+		line-height: 2em;
+	}
+	#meter-container .bad {
+		background: #E2998B;
+	}
+	#meter-container .mediocre {
+		background: #FFB430;
+	}
+	#meter-container .good {
+		background: #74b134;
+	}
+	#meter-container .strong {
+		background: #B1D632;
+	}
+	#meter-container #passwd-meter span {
+		position: absolute;
+		left: 1em;
+		font-size: 85%;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		color: #777;
+	}
+	#hubForm label#botcheck-label {
+		display: none;
+	}
+
+/* Username checker */
+	#hubForm .group p.hint.ok {
+		color: #090;
+	}
+	#hubForm .group p.hint.notok {
+		color: #900;
+	}
+
+/* Third party auth plugins */
+	#providers {
+		margin-top: 65px;
+	}
+
+/* Account Creation */
+	.account-activation {
+		margin: 3em 0;
+		background-color: #fff;
+		-webkit-box-shadow: 0 1px 3px rgba(25, 25, 25, 0.4);
+		   -moz-box-shadow: 0 1px 2px rgba(25, 25, 25, 0.4);
+		    -ms-box-shadow: 0 1px 3px rgba(25, 25, 25, 0.4);
+		     -o-box-shadow: 0 1px 3px rgba(25, 25, 25, 0.4);
+		        box-shadow: 0 1px 3px rgba(25, 25, 25, 0.4);
+		border: 1px solid #ddd\9; /* [!] IE 8 */
+		*border: 1px solid #ddd\9; /* [!] IE 7,6 */
+	}
+	.errer-message,
+	.success-message {
+		font-size: 3.5em;
+		text-align: center;
+		color: #ccc;
+		margin: 0;
+		padding: 0;
+		line-height: 1;
+		font-weight: normal;
+	}
+	.success-message:after {
+		content: "\f058";
+		font-family: "Fontcons";
+		display: block;
+		font-size: 3em;
+	}
+	.error-message:after {
+		content: "\2757";
+		font-family: "Fontcons";
+		display: block;
+		font-size: 3em;
+	}
+	.account-activation .instructions {
+		padding: 1em 1.4em;
+	}
+	.account-activation .notes {
+		padding: 1em 1.4em;
+		background-color: #f0f0f0;
+	}
+	.account-activation .account-email {
+		color: #eca95a;
+		font-weight: bold;
+	}
+	.account-activation ol {
+		list-style: decimal;
+	}
+	p img {
+		margin: 0 1em 1em 0;
+		float: left;
+	}

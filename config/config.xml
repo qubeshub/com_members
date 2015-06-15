@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+@package        hubzero-cms
+@file           components/com_members/config.xml
+@copyright      Copyright 2005-2011 Purdue University. All rights reserved.
+@license        http://www.gnu.org/licenses/lgpl-3.0.html LGPLv3
+
+Copyright 2005-2011 Purdue University. All rights reserved.
+
+This file is part of: The HUBzero(R) Platform for Scientific Collaboration
+
+The HUBzero(R) Platform for Scientific Collaboration (HUBzero) is free
+software: you can redistribute it and/or modify it under the terms of
+the GNU Lesser General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+HUBzero is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+HUBzero is a registered trademark of Purdue University.
+-->
+
+<config>
+	<fieldset name="basic">
+		<field name="contribution_counting" type="list" default="1" label="Contribution Counting" description="Enable (potentially slow) contribution counting in browse view">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</field>
+		<field name="privacy" type="list" default="0" label="Default Privacy" description="Set the default privacy for new profiles">
+			<option value="0">Private</option>
+			<option value="1">Public</option>
+		</field>
+		<field name="bankAccounts" type="list" default="0" label="Bank Accounts" description="Enable Bank Accounts">
+			<option value="1">On</option>
+			<option value="0">Off</option>
+		</field>
+		<field name="manage_quotas" type="list" default="0" label="Manage Quotas" description="Use the CMS to manage user disk quotas?">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="orcid_service" type="list" default="public" label="ORCID Service" description="Select the service to use for ORCID. Sandbox is for testing and debugging purposes. The Public service only allows for searching records, new ID creation is not allowed.">
+			<option value="public">Public (search only)</option>
+			<option value="members">Members</option>
+			<option value="sandbox">Sandbox</option>
+		</field>
+		<field name="orcid_members_token" type="text" menu="hide" default="" label="ORCID Members Token" description="Authorization token for the members ORCID service." />
+		<field name="orcid_sandbox_token" type="text" menu="hide" default="" label="ORCID Sandbox Token" description="Authorization token for the sandbox ORCID service." />
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="defaultpic" type="text" menu="hide" default="/components/com_members/site/assets/img/profile.gif" label="Default picture" description="Default placeholder image for user pictures" />
+		<field name="identicon" type="list" default="0" label="Random Picture" description="Enable generation of a random picture for profiles that do not have one set">
+			<option value="1">On</option>
+			<option value="0">Off</option>
+		</field>
+		<field name="identicon_color" type="text" menu="hide" default="" label="Random Picture Color" description="Specify a color to use when generating random pictures. Otherwise, the color is auto-determined from the string (email) passed to the generator." />
+		<field name="gravatar" type="list" default="0" label="Gravatar Picture" description="Enable Gravatar user pictures">
+			<option value="1">On</option>
+			<option value="0">Off</option>
+		</field>
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="webpath" type="text" menu="hide" default="/site/members" label="Upload path" description="File path for pictures" />
+		<field name="homedir" type="text" menu="hide" default="" label="Home directory path" description="Hub users' home directory path (typically '/home/{hubname}')" />
+		<field name="maxAllowed" type="text" menu="hide" default="40000000" label="Max upload" description="Maximum upload file size" />
+		<field name="file_ext" type="text" menu="hide" label="Extensions" default="jpg,jpeg,jpe,bmp,tif,tiff,png,gif" description="Allowed file types" />
+		<field name="@spacer" type="spacer" default="" label="" description="" />
+		<field name="user_messaging" type="list" default="1" label="User-To-User Messaging" description="Allow/Disallow user-to-user messaging">
+			<option value="0">None</option>
+			<option value="1">Users with common groups</option>
+			<option value="2">Any User</option>
+		</field>
+		<field name="employeraccess" type="list" default="0" label="Allow Employer Access" description="Determine whether to show resume on a private profile to subscribed employers (if Jobs Component is active)">
+			<option value="0">Disallow</option>
+			<option value="1">Allow</option>
+		</field>
+		<field name="gidNumber" type="text" default="100" label="Group ID number" />
+		<field name="gid" type="text" default="users" label="Group ID" />
+	</fieldset>
+	<fieldset name="PASSWORD">
+		<field name="passhash_mechanism" type="list" default="sha512" label="Password Hashing/Encryption Mechanism">
+			<option value="CRYPT_SHA512">SHA-512</option>
+			<option value="MD5">MD5</option>
+		</field>
+		<field name="shadowMax" type="text" default="" label="Shadow Maximum" />
+		<field name="shadowMin" type="text" default="0" label="Shadow Minimum" />
+		<field name="shadowWarning" type="text" default="7" label="Shadow Warning" />
+	</fieldset>
+	<fieldset name="registration">
+		<field name="ConfirmationReturn" type="text" menu="hide" default="" label="Confirmation Return URL" description="Redirect here after confirming email..." />
+		<field name="passwordMeter" type="radio" default="1" label="Password Strength Meter" description="Show a password strength indicator or not">
+			<option value="0">Off</option>
+			<option value="1">On</option>
+		</field>
+		<field name="registrationUsername"         type="text" menu="hide" default="RRUU" label="Username" description="" />
+		<field name="registrationPassword"         type="text" menu="hide" default="RRUU" label="Password" description="" />
+		<field name="registrationConfirmPassword"  type="text" menu="hide" default="RRUU" label="Password Confirmation" description="" />
+		<field name="registrationFullname"         type="text" menu="hide" default="RRUU" label="Full Name" description="" />
+		<field name="registrationEmail"            type="text" menu="hide" default="RRUU" label="Email" description="" />
+		<field name="registrationConfirmEmail"     type="text" menu="hide" default="RRUU" label="Email Confirmation" description="" />
+		<field name="registrationURL"              type="text" menu="hide" default="HHHO" label="URL" description="" />
+		<field name="registrationPhone"            type="text" menu="hide" default="HHHO" label="Phone" description="" />
+		<field name="registrationEmployment"       type="text" menu="hide" default="HHHO" label="Employment" description="" />
+		<field name="registrationOrganization"     type="text" menu="hide" default="HHHO" label="Organization" description="" />
+		<field name="registrationCitizenship"      type="text" menu="hide" default="HHHO" label="Citizenship" description="" />
+		<field name="registrationResidency"        type="text" menu="hide" default="HHHO" label="Residency" description="" />
+		<field name="registrationSex"              type="text" menu="hide" default="HHHO" label="Sex" description="" />
+		<field name="registrationDisability"       type="text" menu="hide" default="HHHO" label="Disability" description="" />
+		<field name="registrationHispanic"         type="text" menu="hide" default="HHHO" label="Hispanic" description="" />
+		<field name="registrationRace"             type="text" menu="hide" default="HHHO" label="Race" description="" />
+		<field name="registrationInterests"        type="text" menu="hide" default="HHHO" label="Interests" description="" />
+		<field name="registrationReason"           type="text" menu="hide" default="HHHO" label="Reason" description=""/>
+		<field name="registrationOptIn"            type="text" menu="hide" default="HHHO" label="OptIn" description="" />
+		<field name="registrationCAPTCHA"          type="text" menu="hide" default="RHHH" label="CAPTCHA" description="CAPTCHA check" />
+		<field name="registrationTOU"              type="text" menu="hide" default="RHRH" label="TOU" description="Terms of Use" />
+		<field name="registrationAddress"          type="text" menu="hide" default="--OO" label="Address" description="" />
+		<field name="registrationORCID"            type="text" menu="hide" default="HHHH" label="ORCID" description="" />
+	</fieldset>
+	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules" type="rules" label="JCONFIG_PERMISSIONS_LABEL" class="inputbox" validate="rules" filter="rules" component="com_members" section="component" />
+	</fieldset>
+</config>
