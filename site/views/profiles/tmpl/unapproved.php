@@ -25,29 +25,21 @@
  * HUBzero is a registered trademark of Purdue University.
  *
  * @package   hubzero-cms
- * @author    Nicholas J. Kisseberth <nkissebe@purdue.edu>
+ * @author    Sam Wilson <samwilson@purdue.edu>
  * @copyright Copyright 2005-2015 HUBzero Foundation, LLC.
  * @license   http://opensource.org/licenses/MIT MIT
  */
 
-// No direct access
+// No direct access.
 defined('_HZEXEC_') or die();
-
-$this->baseURL = rtrim($this->baseURL, '/');
-
-$confirmationCode = -$this->confirm;
-$userEmail = urlencode($this->email);
-$relativeUrl = "index.php?option=$this->option&task=confirm&confirm=$confirmationCode&email=$userEmail";
-$link = $this->baseURL . Route::urlForClient('site', $relativeUrl, false);
-$link = str_replace('/administrator', '', $link);
 ?>
 
-<?php echo Lang::txt('COM_MEMBERS_EMAIL_CREATED') . ": $this->registerDate (UTC)"; ?>
-<?php echo Lang::txt('COM_MEMBERS_EMAIL_NAME') . ": $this->name"; ?>
-<?php echo Lang::txt('COM_MEMBERS_EMAIL_USERNAME') . ": $this->login"; ?>
+<header id="content-header">
+	<h2><?php echo Lang::txt('COM_MEMBERS_PENDING_APPROVAL'); ?></h2>
+</header>
 
-<?php echo Lang::txt('COM_MEMBERS_EMAIL_CONFIRM_MESSAGE', $this->sitename); ?>
-
-<?php echo $link; ?>
-
-<?php echo Lang::txt('COM_MEMBERS_EMAIL_CONFIRM_DO_NOT_REPLY');
+<section class="main section">
+	<p>
+		<?php echo Lang::txt('COM_MEMBERS_PENDING_APPROVAL_MESSAGE', Route::url('index.php?option=com_support&task=new')); ?>
+	</p>
+</section>
