@@ -57,27 +57,50 @@ class Credentials extends SiteController
 	{
 		// Check the request token
 		Session::checkToken('post') or exit(Lang::txt('JINVALID_TOKEN'));
+		$no_html = Request::getInt('no_html', 0);
 
 		// Get the email address
 		if (!$email = trim(Request::getString('email', false)))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=remind', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_EMAIL'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_EMAIL')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=remind', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_EMAIL'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Make sure it looks like a valid email address
 		if (!\Hubzero\Utility\Validate::email($email))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=remind', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_EMAIL'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_EMAIL')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=remind', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_EMAIL'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Find the user(s) for the given email address
@@ -86,12 +109,23 @@ class Credentials extends SiteController
 		// Make sure we have at least one
 		if ($users->count() < 1)
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=remind', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=remind', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		$eview  = new \Hubzero\Mail\View(array(
@@ -127,20 +161,42 @@ class Credentials extends SiteController
 		{
 			Log::error('Members username reminder email failed: ' . Lang::txt('Failed to mail %s', $email));
 
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=remind', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {			
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=remind', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Everything went well...go to the login page
-		App::redirect(
-			Route::url('index.php?option=com_login', false),
-			Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT'),
-			'passed'
-		);
+		if ($no_html)
+		{
+			$response = array(
+				'success' => true,
+				'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT')
+			);
+
+			echo json_encode($response);
+			die();
+		} else {
+			App::redirect(
+				Route::url('index.php?option=com_login', false),
+				Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT'),
+				'passed'
+			);
+		}
 	}
 
 	/**
@@ -163,16 +219,28 @@ class Credentials extends SiteController
 	{
 		// Check the request token
 		Session::checkToken('post') or exit(Lang::txt('JINVALID_TOKEN'));
+		$no_html = Request::getInt('no_html', 0);
 
 		// Grab the incoming username
 		if (!$username = trim(Request::getString('username', false)))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_USERNAME'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_USERNAME')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MISSING_USERNAME'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Make sure it looks like a valid username
@@ -192,12 +260,23 @@ class Credentials extends SiteController
 
 		if (!\Components\Members\Helpers\Utility::$validator($username))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_USERNAME'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_USERNAME')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_INVALID_USERNAME'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Find the user for the given username
@@ -206,21 +285,43 @@ class Credentials extends SiteController
 		// Make sure we have at least one and not more than one
 		if ($user->count() < 1)
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
+					'warning'
+				);
+				return;
+			}
 		}
 		else if ($user->count() > 1)
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MULTIPLE_RESULTS'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MULTIPLE_RESULTS')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_MULTIPLE_RESULTS'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Get the user object
@@ -229,34 +330,67 @@ class Credentials extends SiteController
 		// Make sure the user isn't blocked
 		if ($user->get('block'))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_NOT_FOUND'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Make sure the user isn't a super admin
 		if ($user->authorise('core.admin'))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_IS_SUPER'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_IS_SUPER')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_USER_IS_SUPER'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Make sure the user has not exceeded the reset limit
 		if ($this->hasExceededResetLimit($user))
 		{
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=reset', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_EXCEEDED_LIMIT'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_EXCEEDED_LIMIT')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=reset', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_EXCEEDED_LIMIT'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Set the confirmation token
@@ -302,23 +436,45 @@ class Credentials extends SiteController
 		{
 			Log::error('Members password reset email failed: ' . Lang::txt('Failed to mail %s', $user->get('email')));
 
-			App::redirect(
-				Route::url('index.php?option=' . $this->_option . '&task=remind', false),
-				Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL'),
-				'warning'
-			);
-			return;
+			if ($no_html)
+			{
+				$response = array(
+					'success' => false,
+					'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL')
+				);
+
+				echo json_encode($response);
+				die();
+			} else {
+				App::redirect(
+					Route::url('index.php?option=' . $this->_option . '&task=remind', false),
+					Lang::txt('COM_MEMBERS_CREDENTIALS_ERROR_FIAILED_TO_SEND_MAIL'),
+					'warning'
+				);
+				return;
+			}
 		}
 
 		// Push the user data into the session
 		User::setState('com_members.reset.user', $user->get('id'));
 
 		// Everything went well...go to the token verification page
-		App::redirect(
-			Route::url('index.php?option=' . $this->_option . '&task=verify', false),
-			Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT'),
-			'passed'
-		);
+		if ($no_html)
+		{
+			$response = array(
+				'success' => true,
+				'message' => Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT')
+			);
+
+			echo json_encode($response);
+			die();
+		} else {
+			App::redirect(
+				Route::url('index.php?option=' . $this->_option . '&task=verify', false),
+				Lang::txt('COM_MEMBERS_CREDENTIALS_EMAIL_SENT'),
+				'passed'
+			);
+		}
 	}
 
 	/**
