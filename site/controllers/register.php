@@ -110,7 +110,7 @@ class Register extends SiteController
 		{
 			// Load data from the user object
 			$xregistration->loadProfile($xprofile);
-			return $this->_show_registration_form($xregistration, 'edit');
+			return $this->_show_registration_form($xregistration, 'edit')->display();
 		}
 
 		if ($username != $xregistration->get('login'))
@@ -120,7 +120,7 @@ class Register extends SiteController
 
 		if (!$xregistration->check('edit'))
 		{
-			return $this->_show_registration_form($xregistration, 'edit');
+			return $this->_show_registration_form($xregistration, 'edit')->display();
 		}
 
 		$xprofile->loadRegistration($xregistration);
@@ -638,7 +638,7 @@ class Register extends SiteController
 			return true;
 		}
 
-		return $this->_show_registration_form($xregistration, 'update');
+		return $this->_show_registration_form($xregistration, 'update')->display();
 	}
 
 	/**
@@ -648,6 +648,8 @@ class Register extends SiteController
 	 */
 	public function createTask()
 	{
+		$no_html = Request::getInt('no_html', 0);
+
 		if (!User::isGuest() && !User::get('tmp_user'))
 		{
 			App::redirect(
@@ -948,6 +950,16 @@ class Register extends SiteController
 					return;
 				}
 			}
+
+			// Short-circuit if POST with AJAX
+			if ($no_html) {
+				$response = Array(
+					'success' => true,
+					'message' => $this->_show_registration_form($xregistration, 'create')->loadTemplate()
+				);
+				echo json_encode($response);
+				exit();
+			}
 		}
 
 		if (Request::method() == 'GET')
@@ -973,7 +985,7 @@ class Register extends SiteController
 		// Set the page title
 		$this->_buildTitle();
 
-		return $this->_show_registration_form($xregistration, 'create');
+		return $this->_show_registration_form($xregistration, 'create')->display();
 	}
 
 	/**
@@ -1058,7 +1070,7 @@ class Register extends SiteController
 			->rows();
 
 		// Display the view
-		$this->view
+		return $this->view
 			->set('title', Lang::txt('COM_MEMBERS_REGISTER'))
 			->set('sitename', Config::get('sitename'))
 			->set('config', $this->config)
@@ -1070,8 +1082,7 @@ class Register extends SiteController
 			->set('xregistration', $xregistration)
 			->set('registration', $xregistration->_registration)
 			->setLayout('default')
-			->setErrors($this->getErrors())
-			->display();
+			->setErrors($this->getErrors());
 	}
 
 	/**
