@@ -10,9 +10,9 @@ defined('_HZEXEC_') or die();
 
 $this->baseURL = rtrim($this->baseURL, '/');
 
-$link = $this->baseURL . Route::urlForClient('site', 'index.php?option=' . $this->option . '&task=confirm&confirm=' . -$this->xprofile->get('activation') . '&email=' . urlencode($this->xprofile->get('email')));
+$return = $this->xprofile->getParam('return', false);
+$link = $this->baseURL . Route::urlForClient('site', 'index.php?option=' . $this->option . '&task=confirm&confirm=' . -$this->xprofile->get('activation') . '&email=' . urlencode($this->xprofile->get('email')) . ($return ? '&return=' . $return : ''));
 
-//$link = $this->baseURL . $link;
 $link = str_replace('/administrator', '', $link);
 ?>
 	<!-- Start Header -->
@@ -120,7 +120,7 @@ $link = str_replace('/administrator', '', $link);
 							</tr>
 							<tr>
 								<td style="text-align: left; padding: 0 0.5em;" align="left">
-									<p style="line-height: 1.6em; margin: 1em 0; padding: 0; text-align: left; font-size: 1.2em;"><a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
+									<p style="line-height: 1.6em; margin: 1em 0; padding: 0; text-align: left; font-size: 1.2em;"><a href="<?php echo $link; ?>"><?php echo Lang::txt('COM_MEMBERS_EMAIL_CONFIRM_LINK_TEXT'); ?></a></p>
 								</td>
 							</tr>
 						</tbody>

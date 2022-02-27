@@ -10,7 +10,8 @@ defined('_HZEXEC_') or die();
 
 $this->baseURL = rtrim($this->baseURL, '/');
 
-$link = $this->baseURL . Route::urlForClient('site', 'index.php?option=' . $this->option . '&task=confirm&confirm=' . -$this->xprofile->get('activation') . '&email=' . urlencode($this->xprofile->get('email')));
+$return = $this->xprofile->getParam('return', false);
+$link = $this->baseURL . Route::urlForClient('site', 'index.php?option=' . $this->option . '&task=confirm&confirm=' . -$this->xprofile->get('activation') . '&email=' . urlencode($this->xprofile->get('email')) . ($return ? '&return=' . $return : ''));
 
 //$link = $this->baseURL . $link;
 $link = str_replace('/administrator', '', $link);

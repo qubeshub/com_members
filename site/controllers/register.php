@@ -928,8 +928,7 @@ class Register extends SiteController
 						->set('sitename', Config::get('sitename'))
 						->set('xprofile', $user)
 						->setErrors($this->getErrors())
-						->setLayout('create')
-						->display();
+						->setLayout('create');
 
 					if (is_object($hzal))
 					{
@@ -947,7 +946,18 @@ class Register extends SiteController
 					User::set('email', $xregistration->get('email'));
 					User::set('id', $user->get('id'));
 
-					return;
+					if ($no_html) {
+						$response = array(
+							'success' => true,
+							'message' => $this->view->loadTemplate()
+						);
+		
+						echo json_encode($response);
+						die();
+					} else {
+						$this->view->display();
+						return;
+					}
 				}
 			}
 
@@ -1444,7 +1454,7 @@ class Register extends SiteController
 				Request::setVar('task', 'login');
 				Request::setVar('option', 'com_login');
 
-				$authController->login();
+				$authController->loginTask('get');
 				// $authController->login() always redirects, should never make it here
 			}
 			else
@@ -1500,18 +1510,18 @@ class Register extends SiteController
 		elseif ($email_confirmed < 0 && $email_confirmed == -$code)
 		{
 			//var to hold return path
-			$return = '';
+			$return = ($this->isBase64($return) ? base64_decode($return) : $return);
 
 			// get return path
 			$cReturn = $this->config->get('ConfirmationReturn');
-			if ($cReturn)
+			if (!$return && $cReturn)
 			{
 				$return = $cReturn;
 			}
 
 			//check to see if we have a return param
 			$pReturn = base64_decode(urldecode($xprofile->getParam('return')));
-			if ($pReturn)
+			if (!$return && $pReturn)
 			{
 				$return = $pReturn;
 				$xprofile->setParam('return', '');
@@ -1662,5 +1672,21 @@ class Register extends SiteController
 			$title = Lang::txt('COM_MEMBERS_REGISTER');
 		}
 		\Document::setTitle($title);
+	}
+
+	/**
+	 * Is the provided string base64 encoded?
+	 *
+	 * @param   string  $str
+	 * @return  bool
+	 **/
+	protected function isBase64($str)
+	{
+		if (preg_match('/[^A-Za-z0-9\+\/\=]/', $str))
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

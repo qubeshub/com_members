@@ -237,6 +237,15 @@ class Utility
 		{
 			//$this->setError(Lang::txt('COM_MEMBERS_REGISTER_ERROR_EMAILING_CONFIRMATION'/*, $hubMonitorEmail*/));
 			// @FIXME: LOG ERROR SOMEWHERE
+
+			$response = array(
+				'success' => true,
+				'message' => $message
+			);
+
+			echo json_encode($response);
+			die();
+
 			return false;
 		}
 
