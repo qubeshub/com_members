@@ -457,6 +457,7 @@ class Register extends SiteController
 			Session::set('registration.incomplete', false);
 			if ($_SERVER['REQUEST_URI'] == rtrim(Request::base(true), '/') . '/register/update'
 			 || $_SERVER['REQUEST_URI'] == rtrim(Request::base(true), '/') . '/members/register/update')
+			 || $_SERVER['REQUEST_URI'] == rtrim(Request::base(true), '/') . '/community/members/register/update')
 			{
 				App::redirect(rtrim(Request::base(true), '/') . '/');
 			}
