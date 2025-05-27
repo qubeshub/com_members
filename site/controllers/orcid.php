@@ -335,7 +335,7 @@ class Orcid extends SiteController
 		{
 			if (preg_match('/([^:]+): (.+)/m', $field, $match))
 			{
-				$match[1] = preg_replace(
+				$match[1] = preg_replace_callback(
 					'/(?<=^|[\x09\x20\x2D])./',
 					function ($m)
 					{
