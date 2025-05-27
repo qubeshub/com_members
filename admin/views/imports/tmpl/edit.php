@@ -54,7 +54,7 @@ $this->js();
 
 			<?php
 				// parse our hooks
-				$hooks              = json_decode($this->import->get('hooks'));
+				$hooks = json_decode($this->import->get('hooks') ?: '');
 				if (!is_object($hooks))
 				{
 					$hooks = new stdClass;
