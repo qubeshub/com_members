@@ -411,7 +411,7 @@ class Member extends User implements \Hubzero\Search\Searchable
 			}
 			else
 			{
-				$val = trim($data);
+				$val = trim($data == null ? '' : $data);
 
 				$field = null;
 
