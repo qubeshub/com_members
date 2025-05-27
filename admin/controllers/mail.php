@@ -92,7 +92,6 @@ class Mail extends AdminController
 		$subject  = array_key_exists('subject', $data) ? $data['subject'] : '';
 		$grp      = array_key_exists('group', $data) ? intval($data['group']) : 0;
 		$recurse  = array_key_exists('recurse', $data) ? intval($data['recurse']) : 0;
-		$bcc      = array_key_exists('bcc', $data) ? intval($data['bcc']) : 0;
 		$disabled = array_key_exists('disabled', $data) ? intval($data['disabled']) : 0;
 		$message_body = array_key_exists('message', $data) ? $data['message'] : '';
 
@@ -160,15 +159,8 @@ class Mail extends AdminController
 		$mailer->setBody($message_body . $this->config->get('mailBodySuffix'));
 
 		// Add recipients
-		if ($bcc)
-		{
-			$mailer->setBcc($rows);
-			$mailer->addTo(Config::get('mailfrom'));
-		}
-		else
-		{
-			$mailer->setTo($rows);
-		}
+		$mailer->setTo(Config::get('mailfrom'), Config::get('fromname'));
+		$mailer->setBcc($rows);
 
 		// Send the Mail
 		$rs = $mailer->send();
@@ -188,14 +180,13 @@ class Mail extends AdminController
 		}
 		else
 		{
-			// Fill the data (specially for the 'mode', 'group' and 'bcc': they could not exist in the array
+			// Fill the data (specially for the 'mode', 'group': they could not exist in the array
 			// when the box is not checked and in this case, the default value would be used instead of the '0'
 			// one)
 			$data['mode'] = $mode;
 			$data['subject'] = $subject;
 			$data['group'] = $grp;
 			$data['recurse'] = $recurse;
-			$data['bcc'] = $bcc;
 			$data['message'] = $message_body;
 
 			$this->setUserState('com_members.display.mail.data', array());

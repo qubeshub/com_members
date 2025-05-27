@@ -49,11 +49,6 @@ $this->js();
 					<?php echo $this->form->getLabel('group'); ?>
 					<?php echo $this->form->getInput('group'); ?>
 				</div>
-
-				<div class="input-wrap">
-					<?php echo $this->form->getLabel('bcc'); ?>
-					<?php echo $this->form->getInput('bcc'); ?>
-				</div>
 			</fieldset>
 		</div>
 		<div class="col span7">
