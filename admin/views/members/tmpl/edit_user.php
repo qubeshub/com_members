@@ -8,10 +8,10 @@
 // No direct access
 defined('_HZEXEC_') or die();
 
-$name       = stripslashes($this->profile->get('name'));
-$surname    = stripslashes($this->profile->get('surname'));
-$givenName  = stripslashes($this->profile->get('givenName'));
-$middleName = stripslashes($this->profile->middleName);
+$name       = stripslashes($this->profile->get('name','') == null ? '' : $this->profile->get('name',''));
+$surname    = stripslashes($this->profile->get('surname','') == null ? '' : $this->profile->get('surname',''));
+$givenName  = stripslashes($this->profile->get('givenName','') == null ? '' : $this->profile->get('givenName',''));
+$middleName = stripslashes($this->profile->middleName == null ? '' : $this->profile->middleName);
 
 
 if (!$surname)
@@ -30,7 +30,7 @@ if (!$surname)
 
 $incomplete = false;
 $authenticator = 'hub';
-if (substr($this->profile->get('email'), -8) == '@invalid')
+if (substr($this->profile->get('email',''), -8) == '@invalid')
 {
 	$authenticator = Lang::txt('COM_MEMBERS_UNKNOWN');
 	if ($lnk = Hubzero\Auth\Link::find_by_id(abs($this->profile->get('username'))))

@@ -294,7 +294,7 @@ if (!$form_redirect && !in_array($current, array('/register/update', '/members/u
 					$middleName = '';
 					$surname    = '';
 
-					$bits = explode(' ', $this->registration['name']);
+					$bits = explode(' ', $this->registration['name'] == null ? '' : $this->registration['name']);
 					$surname = array_pop($bits);
 					if (count($bits) >= 1)
 					{

@@ -36,7 +36,7 @@ class Orcid extends Text
 		// Initialize variables.
 		$attributes = array(
 			'type'         => 'text',
-			'value'        => htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8'),
+			'value'        => htmlspecialchars($this->value == null ? '' : $this->value, ENT_COMPAT, 'UTF-8'),
 			'name'         => $this->name,
 			'id'           => $this->id,
 			'size'         => ($this->element['size']      ? (int) $this->element['size']      : ''),

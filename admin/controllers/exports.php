@@ -310,7 +310,7 @@ class Exports extends AdminController
 				{
 					$val = implode(';', $val);
 				}
-				else
+				else if ($val != null)
 				{
 					if (strstr($val, '{'))
 					{
@@ -336,6 +336,10 @@ class Exports extends AdminController
 							continue;
 						}
 					}
+				}
+				else
+				{
+					$val = '';
 				}
 
 				$tmp[$key] = $val;

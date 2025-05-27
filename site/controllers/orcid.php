@@ -204,7 +204,7 @@ class Orcid extends SiteController
 		$srv = $this->config->get('orcid_service', 'members');
 		$clientID = $this->config->get('orcid_' . $srv . '_client_id');
 		$clientSecret = $this->config->get('orcid_' . $srv . '_token');
-		$oauthToken = $this->_oauthToken[$srv];
+		$oauthToken = isset($this->_oauthToken[$srv]) ? $this->_oauthToken[$srv] : '';
 		$params = "client_id=" . $clientID . "&client_secret=" . $clientSecret. "&grant_type=client_credentials&scope=/read-public";
 
 		$ch = curl_init();
