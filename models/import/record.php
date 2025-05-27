@@ -235,7 +235,7 @@ class Record extends \Hubzero\Content\Import\Model\Record
 			// Save extras
 			$this->_saveExtraData();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
 			array_push($this->record->errors, $e->getMessage());
 		}
