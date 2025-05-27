@@ -867,7 +867,7 @@ class Register extends SiteController
 				$user->set('access', 5);
 				$user->set('activation', -rand(1, pow(2, 31)-1));
 
-				if (is_object($hzal))
+				if (is_object($hzal) && isset($hzal->email))
 				{
 					if ($user->get('email') == $hzal->email)
 					{
@@ -880,7 +880,12 @@ class Register extends SiteController
 					$user->set('access', (int)$this->config->get('privacy', 1));
 				}
 
-				$user->set('password', \Hubzero\User\Password::getPasshash($xregistration->get('password')));
+				$password = $xregistration->get('password');
+
+				if ($password != '')
+				{
+					$user->set('password', \Hubzero\User\Password::getPasshash($xregistration->get('password')));
+				}
 
 				// Do we have a return URL?
 				$regReturn = Request::getString('return', '');
@@ -893,6 +898,12 @@ class Register extends SiteController
 				// If we managed to create a user
 				if ($user->save())
 				{
+					if (is_object($hzal))
+					{
+						$hzal->set('user_id', $user->get('id'));
+						$hzal->update();
+					}
+
 					$access = array();
 					foreach ($fields as $field)
 					{
@@ -926,10 +937,15 @@ class Register extends SiteController
 				// If everything is OK so far...
 				if ($result)
 				{
-					$result = \Hubzero\User\Password::changePassword($user->get('id'), $xregistration->get('password'));
+					$password = $xregistration->get('password');
 
-					// Set password back here in case anything else down the line is looking for it
-					$user->set('password', $xregistration->get('password'));
+					if ($password)
+					{
+						$result = \Hubzero\User\Password::changePassword($user->get('id'), $xregistration->get('password'));
+
+						// Set password back here in case anything else down the line is looking for it
+						$user->set('password', $xregistration->get('password'));
+					}
 
 					// Did we successfully create/update an account?
 					if (!$result)
