@@ -38,7 +38,7 @@ class Html
 		foreach ($arr as $k => $v)
 		{
 			$selected = ($k == $value)
-					  ? ' selected="selected"'
+					  ? ' selected=1'
 					  : '';
 			$html .= ' <option value="' . $k . '"' . $selected . '>' . $v . '</option>' . "\n";
 		}

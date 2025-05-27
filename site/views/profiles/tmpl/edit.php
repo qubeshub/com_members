@@ -160,7 +160,7 @@ foreach ($profiles as $profile)
 					);
 					foreach ($options as $key => $value)
 					{
-						$sel = ($key == $this->profile->get('sendEmail')) ? 'selected="selected"' : '';
+						$sel = ($key == $this->profile->get('sendEmail')) ? 'selected="1"' : '';
 						echo '<option ' . $sel . ' value="' . $key . '">' . $value . '</option>';
 					}
 					?>
