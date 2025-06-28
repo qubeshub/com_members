@@ -36,6 +36,9 @@ class Awards
 	 */
 	private $uid;
 
+
+	public $profile;
+
 	/**
 	 * Get the database connection
 	 *
