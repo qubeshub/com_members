@@ -636,6 +636,7 @@ if (!$form_redirect && !in_array($current, array('/register/update', '/members/u
 		<input type="hidden" name="task" value="<?php echo $this->task; ?>" />
 		<input type="hidden" name="act" value="submit" />
 		<?php echo Html::input('token'); ?>
+		<input type="hidden" name="ajax_url" value="<?php echo Route::url('index.php?option='.$this->option.'&' . ($this->task == 'create' ? 'return=' . $form_redirect : 'task=' . $this->task)); ?>" />
 		<input type="hidden" name="base_uri" id="base_uri" value="<?php echo rtrim(Request::base(true), '/'); ?>" />
 		<input type="hidden" name="return" value="<?php echo urlencode($form_redirect); // urlencode is XSS protection added to this field, see ticket 1411 ?>" />
 	</form>
