@@ -1501,8 +1501,8 @@ class Register extends SiteController
 				Request::setVar('task', 'login');
 				Request::setVar('option', 'com_login');
 
-				$authController->loginTask('get');
-				// $authController->login() always redirects, should never make it here
+				$authController->loginTask();
+				// loginTask() always redirects, so we should never make it here
 			}
 			else
 			{
